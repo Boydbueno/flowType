@@ -10,7 +10,7 @@
 
     <router-link class="back key" to="/"><span>esc</span></router-link>
 
-    <textarea ref="textarea" autofocus @keyup="onKeyUp" v-model="text" :style="{ opacity: this.showEraseTimer ? 1 - this.eraseProgress : 1 }"></textarea>
+    <textarea ref="textarea" autofocus @keyup="onKeyUp" v-model="text" :style="{ opacity: this.opacity }"></textarea>
   </div>
 </template>
 
@@ -30,12 +30,17 @@ export default {
       eraseProgress: 1,
       goalProgress: 1,
       showEraseTimer: false,
-      opacity: 1,
       hasStarted: false
     }
   },
 
   computed: {
+    opacity () {
+      if (this.eraseProgress === 1) return 1
+
+      return this.showEraseTimer ? 1 - this.eraseProgress : 1
+    },
+
     goalTime () {
       return this.$store.state.settings.goalTime
     },
