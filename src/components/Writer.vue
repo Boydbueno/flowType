@@ -101,6 +101,7 @@ export default {
 
       if (this.eraseTimer.time >= this.eraseTime) {
         this.eraseTimer.time = this.eraseTime
+        this.eraseProgress = 1
         this.stop()
       }
 
