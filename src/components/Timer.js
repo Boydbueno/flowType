@@ -55,7 +55,7 @@ export default class Timer {
   resume () {
     if (!this.isPaused) return
 
-    this.previousPausedTime += this.pausedTime
+    this.previousPausedTime = this.pausedTime
     this.pausedStartTime = -1
     this.isPaused = false
   }
