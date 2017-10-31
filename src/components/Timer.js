@@ -40,6 +40,12 @@ export default class Timer {
 
   stop () {
     this.hasStarted = false
+    this.isPaused = false
+    this.pausedStartTime = -1
+    this.previousPausedTime = 0
+    this.pausedTime = 0
+    this.startTime = -1
+    this.timestamp = -1
   }
 
   pause () {
