@@ -6,11 +6,14 @@
       <section class="goal-select cf">
         <h1>Pick Goal</h1>
         <div class="options cf">
-          <ft-button :is-active="goalTime == 60000 * 15" @ft-click="setGoalTime(60000 * 15)">15 min</ft-button>
-
-          <ft-button :is-active="goalTime == 60000 * 30" @ft-click="setGoalTime(60000 * 30)">30 min</ft-button>
-
-          <ft-button :is-active="goalTime == 60000 * 60" @ft-click="setGoalTime(60000 * 60)">60 min</ft-button>
+          <ft-button 
+            v-for="(time, key) in availableTimes" 
+            :is-active="goalTime == time.milliseconds" 
+            @ft-click="setGoalTime(time.milliseconds)"
+            :key="key"
+          >
+            {{ time.label }}
+          </ft-button>
 
           <div class="cf"></div>
         </div>
@@ -43,6 +46,10 @@ export default {
   computed: {
     goalTime () {
       return this.$store.state.goalTime
+    },
+
+    availableTimes () {
+      return this.$store.state.settings.availableTimes
     }
   },
 
