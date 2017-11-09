@@ -1,24 +1,30 @@
 <template>
   <div class="writer" @click="focus">
     <transition name="fade">
-      <div class="progress goal-progress" v-show="hasStarted" :style="{ width: 100 * this.goalProgress + '%' }"></div>
+      <div class="progress goal-progress" v-show="hasStarted" :style="{ width: this.goalProgressBarWidth + '%' }"></div>
     </transition>
 
     <transition name="fade">
-      <div class="progress erase-progress" v-show="showEraseTimer" :style="{ width: 100 - 100 * this.eraseProgress + '%' }"></div>
+      <div class="progress erase-progress" v-show="showEraseTimer" :style="{ width: this.eraseProgressBarWidth + '%' }"></div>
     </transition>
 
-    <router-link class="back key" to="/"><span>esc</span></router-link>
+    <ft-button @ft-click="$router.push('/')">esc</ft-button>
 
     <textarea ref="textarea" autofocus @keyup="onKeyUp" v-model="text" :style="{ opacity: this.opacity }"></textarea>
   </div>
 </template>
 
 <script>
-import Timer from './Timer.js'
+import Timer from './../Timer.js'
+import FtButton from '@/components/FtButton'
 
 export default {
   name: 'Writer',
+
+  components: {
+    'ft-button': FtButton
+  },
+
   data () {
     return {
       eraseMargin: 1000,
@@ -47,6 +53,14 @@ export default {
 
     eraseTime () {
       return this.$store.state.settings.eraseTime
+    },
+
+    goalProgressBarWidth () {
+      return 100 * this.goalProgress
+    },
+
+    eraseProgressBarWidth () {
+      return 100 - 100 * this.eraseProgress
     }
   },
 
@@ -195,35 +209,5 @@ export default {
   .back {
     margin-top: 20px;
     padding-left: 20px;
-  }
-
-  .key {
-    text-decoration: none;
-    display: inline-block;
-    width:35px;
-    height: 37px;
-  }
-
-  .key > span {
-    box-sizing: border-box;
-    display: block;
-    width: 35px;
-    height: 35px;
-    border: 1px solid #a9a9a9;
-    border-radius: 2px;
-    font-size: 12px;
-    text-align: center;
-    padding-top: 10px;
-    background-color: rgba(255, 255, 255, 0.3);
-    color: #7c7c7c;
-    box-shadow: 0px 3px 0px -2px rgba(255,255,255,.8), 0px 2px 0px 0px rgba(169,169,169,1);
-    cursor: pointer;
-  }
-
-  .key > span:active {
-    margin-top: 2px;
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
   }
 </style>

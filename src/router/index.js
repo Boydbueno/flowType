@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Setup from '@/components/Setup'
-import Writer from '@/components/Writer'
+import SetupPage from '@/components/Pages/SetupPage'
+import TypePage from '@/components/Pages/TypePage'
 
 Vue.use(Router)
 
@@ -9,13 +9,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Setup',
-      component: Setup
+      name: 'SetupPage',
+      component: SetupPage
     },
     {
       path: '/writer',
-      name: 'Writer',
-      component: Writer
+      name: 'TypePage',
+      component: TypePage
     }
   ]
 })

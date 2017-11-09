@@ -1,0 +1,97 @@
+<template>
+	<section class="setup">
+    
+    <div class="container">
+
+      <section class="goal-select cf">
+        <h1>Pick Goal</h1>
+        <div class="options cf">
+          <ft-button :is-active="goalTime == 60000 * 15" @ft-click="setGoalTime(60000 * 15)">15 min</ft-button>
+
+          <ft-button :is-active="goalTime == 60000 * 30" @ft-click="setGoalTime(60000 * 30)">30 min</ft-button>
+
+          <ft-button :is-active="goalTime == 60000 * 60" @ft-click="setGoalTime(60000 * 60)">60 min</ft-button>
+
+          <div class="cf"></div>
+        </div>
+      </section>
+
+      <section>
+        <ft-button type="confirm" @ft-click="$router.push('writer')">Go</ft-button>
+      </section>
+
+    </div>
+
+	</section>
+</template>
+
+<script>
+import FtButton from '@/components/FtButton'
+
+export default {
+  name: 'Setup',
+
+  components: {
+    'ft-button': FtButton
+  },
+
+  data () {
+    return {
+    }
+  },
+
+  computed: {
+    goalTime () {
+      return this.$store.state.settings.goalTime
+    }
+  },
+
+  created () {
+  },
+
+  methods: {
+    isGoalTime (time) {
+      return this.goalTime === time
+    },
+
+    updateGoalTime (e) {
+      this.$store.commit('updateGoalTime', e.target.value)
+    },
+
+    setGoalTime (time) {
+      this.$store.commit('updateGoalTime', time)
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+  .setup {
+    height: 100%;
+    margin: 0 auto;
+    background-color: #cecec4;
+  }
+
+  .container {
+    width: 1000px;
+    margin: 0 auto;
+  }
+
+  .goal-select { 
+    padding-top: 50px;
+  }
+
+  .cf {
+    clear: both;
+  }
+
+  h1 {
+    margin-top: 0;
+    margin-left: 15px;
+  }
+
+  .continue {
+    margin-top: 15px;
+    margin-left: 15px;
+  }
+</style>

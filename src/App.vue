@@ -5,12 +5,12 @@
 </template>
 
 <script>
-import store from '@/store'
+  import store from '@/store'
 
-export default {
-  name: 'app',
-  store
-}
+  export default {
+    name: 'app',
+    store
+  }
 </script>
 
 <style>
