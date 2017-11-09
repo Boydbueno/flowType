@@ -42,7 +42,7 @@ export default {
 
   computed: {
     goalTime () {
-      return this.$store.state.settings.goalTime
+      return this.$store.state.goalTime
     }
   },
 

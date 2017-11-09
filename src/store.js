@@ -6,14 +6,15 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     settings: {
-      goalTime: 10000,
-      eraseTime: 6000
-    }
+    },
+
+    goalTime: 10000,
+    eraseTime: 6000
   },
 
   mutations: {
     updateGoalTime (state, goalTime) {
-      state.settings.goalTime = parseInt(goalTime)
+      state.goalTime = parseInt(goalTime)
     }
   }
 })

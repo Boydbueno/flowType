@@ -48,11 +48,11 @@ export default {
     },
 
     goalTime () {
-      return this.$store.state.settings.goalTime
+      return this.$store.state.goalTime
     },
 
     eraseTime () {
-      return this.$store.state.settings.eraseTime
+      return this.$store.state.eraseTime
     },
 
     goalProgressBarWidth () {
