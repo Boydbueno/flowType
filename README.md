@@ -1,6 +1,6 @@
 # flow-type
 
-> A Vue.js project
+> A simple typing app that removes all your progress when you don't type for too long. Should keep you motivated
 
 ## Build Setup
 
@@ -26,5 +26,3 @@ npm run e2e
 # run all tests
 npm test
 ```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
