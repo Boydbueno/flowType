@@ -22,6 +22,9 @@ export default new Vuex.Store({
       ]
     },
 
+    text: '',
+    previousText: '',
+
     goalTime: 10000,
     eraseTime: 6000
   },
@@ -29,6 +32,12 @@ export default new Vuex.Store({
   mutations: {
     updateGoalTime (state, goalTime) {
       state.goalTime = parseInt(goalTime)
+    },
+    updateText (state, text) {
+      state.text = text
+    },
+    updatePreviousText (state) {
+      state.previousText = state.text
     }
   }
 })

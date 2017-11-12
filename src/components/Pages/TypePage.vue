@@ -1,38 +1,37 @@
 <template>
   <div class="writer" @click="focus">
-    <transition name="fade">
-      <div class="progress goal-progress" v-show="hasStarted" :style="{ width: this.goalProgressBarWidth + '%' }"></div>
-    </transition>
+    <ft-progress class="goal-progress" :show="hasStarted" :progress="goalProgressBarWidth" />    
 
-    <transition name="fade">
-      <div class="progress erase-progress" v-show="showEraseTimer" :style="{ width: this.eraseProgressBarWidth + '%' }"></div>
-    </transition>
+    <ft-progress class="erase-progress" :show="showEraseTimer" :progress="eraseProgressBarWidth" />
 
     <ft-button @ft-click="$router.push('/')">esc</ft-button>
 
-    <textarea ref="textarea" autofocus @keyup="onKeyUp" v-model="text" :style="{ opacity: this.opacity }"></textarea>
+    <ft-typer @ft-text-changed="onTextChanged" @ft-typer-mounted="onTyperMounted" :opacity="opacity" />
   </div>
 </template>
 
 <script>
 import Timer from './../Timer.js'
 import FtButton from '@/components/FtButton'
+import FtProgress from '@/components/FtProgress'
+import FtTyper from '@/components/FtTyper'
 
 export default {
-  name: 'Writer',
+  name: 'TypePage',
 
   components: {
-    'ft-button': FtButton
+    'ft-button': FtButton,
+    'ft-progress': FtProgress,
+    'ft-typer': FtTyper
   },
 
   data () {
     return {
+      typerRef: null,
       eraseMargin: 1000,
 
       eraseTimer: null,
       goalTimer: null,
-      text: '',
-      previousText: '',
       eraseProgress: 1,
       goalProgress: 1,
       showEraseTimer: false,
@@ -73,19 +72,12 @@ export default {
 
   methods: {
     focus () {
-      this.$refs.textarea.focus()
+      if (!this.typerRef) return
+
+      this.typerRef.focus()
     },
 
-    onKeyUp (e) {
-      // When there was no new input given
-      if (this.previousText === this.text) {
-        return
-      }
-
-      if (this.text === '') {
-        return
-      }
-
+    onTextChanged () {
       if (!this.hasStarted) {
         this.start()
       }
@@ -93,8 +85,12 @@ export default {
       // We can reset the timer here
       this.eraseTimer.reset()
       this.showEraseTimer = false
+      // this.previousText = this.text
+      this.$store.commit('updatePreviousText')
+    },
 
-      this.previousText = this.text
+    onTyperMounted (ref) {
+      this.typerRef = ref
     },
 
     start () {
@@ -130,7 +126,7 @@ export default {
 
       if (this.goalTimer.time >= this.goalTime) {
         var pom = document.createElement('a')
-        pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.text))
+        pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.$store.state.text))
         pom.setAttribute('download', 'text.txt')
 
         var event = document.createEvent('MouseEvents')
@@ -146,10 +142,10 @@ export default {
 
     stop () {
       this.hasStarted = false
-      this.previousText = ''
       this.eraseTimer.stop()
       this.goalTimer.stop()
-      this.text = ''
+      this.$store.commit('updateText', '')
+      this.$store.commit('updatePreviousText')
     }
   }
 }
@@ -161,41 +157,12 @@ export default {
     cursor: text;
   }
 
-  .progress {
-    z-index: 10;
-    position: absolute;
-    height: 1px;
-    opacity: 0.5;
-  }
-
   .goal-progress {
     background-color: green;
-    width: 100%;
-    height: 2px;
   }
 
   .erase-progress {
     background-color: red;
-  }
-
-  textarea {
-    box-sizing: border-box;
-    display: block;
-    resize: none;
-    border: 0;
-    width: 1200px;
-    height: 100vh;
-
-    &:focus {
-      outline: 0;
-    }
-
-    padding-top: 70px;
-    margin: 0 auto;
-    padding: 15px;
-    font-size: 45px;
-
-    background-color: transparent;
   }
 
   .fade-enter-active {

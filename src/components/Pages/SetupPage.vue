@@ -32,7 +32,7 @@
 import FtButton from '@/components/FtButton'
 
 export default {
-  name: 'Setup',
+  name: 'SetupPage',
 
   components: {
     'ft-button': FtButton
