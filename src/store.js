@@ -30,7 +30,7 @@ export default new Vuex.Store({
   },
 
   mutations: {
-    updateGoalTime (state, goalTime) {
+    setGoalTime (state, goalTime) {
       state.goalTime = parseInt(goalTime)
     },
     updateText (state, text) {

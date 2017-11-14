@@ -8,7 +8,7 @@
         <div class="options cf">
           <ft-button 
             v-for="(time, key) in availableTimes" 
-            :is-active="goalTime == time.milliseconds" 
+            :is-active="goalTime === time.milliseconds" 
             @ft-click="setGoalTime(time.milliseconds)"
             :key="key"
           >
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
+
 import FtButton from '@/components/FtButton'
 
 export default {
@@ -38,36 +40,18 @@ export default {
     'ft-button': FtButton
   },
 
-  data () {
-    return {
-    }
-  },
-
-  computed: {
-    goalTime () {
-      return this.$store.state.goalTime
-    },
-
-    availableTimes () {
-      return this.$store.state.settings.availableTimes
-    }
-  },
+  computed: mapState({
+    goalTime: state => state.goalTime,
+    availableTimes: state => state.settings.availableTimes
+  }),
 
   created () {
   },
 
   methods: {
-    isGoalTime (time) {
-      return this.goalTime === time
-    },
-
-    updateGoalTime (e) {
-      this.$store.commit('updateGoalTime', e.target.value)
-    },
-
-    setGoalTime (time) {
-      this.$store.commit('updateGoalTime', time)
-    }
+    ...mapMutations([
+      'setGoalTime'
+    ])
   }
 }
 </script>
