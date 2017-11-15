@@ -32,6 +32,7 @@
 import { mapState, mapMutations } from 'vuex'
 
 import FtButton from '@/components/FtButton'
+import settings from '@/settings'
 
 export default {
   name: 'SetupPage',
@@ -40,10 +41,12 @@ export default {
     'ft-button': FtButton
   },
 
-  computed: mapState({
-    goalTime: state => state.goalTime,
-    availableTimes: state => state.settings.availableTimes
-  }),
+  computed: {
+    availableTimes: () => settings.availableTimes,
+    ...mapState([
+      'goalTime'
+    ])
+  },
 
   created () {
   },
