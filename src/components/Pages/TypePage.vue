@@ -16,6 +16,8 @@ import FtButton from '@/components/FtButton'
 import FtProgress from '@/components/FtProgress'
 import FtTyper from '@/components/FtTyper'
 
+import { mapState } from 'vuex'
+
 export default {
   name: 'TypePage',
 
@@ -46,28 +48,23 @@ export default {
       return this.showEraseTimer ? 1 - this.eraseProgress : 1
     },
 
-    goalTime () {
-      return this.$store.state.goalTime
-    },
-
-    eraseTime () {
-      return this.$store.state.eraseTime
-    },
-
     goalProgressBarWidth () {
       return 100 * this.goalProgress
     },
 
     eraseProgressBarWidth () {
       return 100 - 100 * this.eraseProgress
-    }
+    },
+
+    ...mapState([
+      'goalTime',
+      'eraseTime'
+    ])
   },
 
   created () {
     this.eraseTimer = new Timer()
     this.goalTimer = new Timer()
-    // This timer should start when first letter is typed
-    // It should stop when the page is made blank (by user or by eraser)
   },
 
   methods: {
@@ -85,7 +82,6 @@ export default {
       // We can reset the timer here
       this.eraseTimer.reset()
       this.showEraseTimer = false
-      // this.previousText = this.text
       this.$store.commit('updatePreviousText')
     },
 
@@ -125,19 +121,23 @@ export default {
       }
 
       if (this.goalTimer.time >= this.goalTime) {
-        var pom = document.createElement('a')
-        pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.$store.state.text))
-        pom.setAttribute('download', 'text.txt')
-
-        var event = document.createEvent('MouseEvents')
-        event.initEvent('click', true, true)
-        pom.dispatchEvent(event)
+        this.fileDownload()
         this.stop()
       }
 
       if (this.hasStarted) {
         window.requestAnimationFrame(this.update)
       }
+    },
+
+    fileDownload () {
+      var pom = document.createElement('a')
+      pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.$store.state.text))
+      pom.setAttribute('download', 'text.txt')
+
+      var event = document.createEvent('MouseEvents')
+      event.initEvent('click', true, true)
+      pom.dispatchEvent(event)
     },
 
     stop () {
