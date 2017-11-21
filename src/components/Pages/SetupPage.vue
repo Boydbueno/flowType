@@ -48,9 +48,6 @@ export default {
     ])
   },
 
-  created () {
-  },
-
   methods: {
     ...mapMutations([
       'setGoalTime'
