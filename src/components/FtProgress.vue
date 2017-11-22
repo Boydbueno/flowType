@@ -8,13 +8,15 @@
   export default {
     name: 'FtProgress',
 
-    props: [
-      'progress',
-      'show'
-    ],
+    props: {
+      progress: {
+        type: Number,
+        default: 0
+      },
 
-    data () {
-      return {
+      show: {
+        type: Boolean,
+        default: false
       }
     }
   }
