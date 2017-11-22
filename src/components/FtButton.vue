@@ -18,15 +18,11 @@
 
       type: {
         type: String,
+        default: 'default',
         validator: (value) => {
-          const types = ['confirm']
+          const types = ['confirm', 'default']
           return types.includes(value)
         }
-      }
-    },
-
-    data () {
-      return {
       }
     }
   }
