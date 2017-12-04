@@ -1,7 +1,21 @@
 <template>
   <div class="writer" @click="focus">
-    <ft-progress class="goal-progress" :show="hasStarted" :progress="goalProgressBarWidth" />    
+    <ft-timer 
+    ref="goalTimer" 
+    :max="goalTime" 
+    @ft-timer-max-reached="onGoalReached" 
+    @on-mounted="onGoalTimerMounted" 
+    />
+    <ft-progress class="goal-progress" :show="hasStarted" :progress="goalProgressBarWidth" />
 
+    <ft-timer 
+    ref="eraseTimer" 
+    :interval="[eraseMargin]" 
+    :max="eraseTime + eraseMargin" 
+    @ft-timer-interval-reached="onEraseIntervalReached" 
+    @ft-timer-max-reached="onEraseReached"
+    @on-mounted="onEraseTimerMounted"
+    />
     <ft-progress class="erase-progress" :show="showEraseTimer" :progress="eraseProgressBarWidth" />
 
     <ft-button @ft-click="$router.push('/')">esc</ft-button>
@@ -11,7 +25,7 @@
 </template>
 
 <script>
-import Timer from './../Timer.js'
+import FtTimer from '@/components/FtTimer'
 import FtButton from '@/components/FtButton'
 import FtProgress from '@/components/FtProgress'
 import FtTyper from '@/components/FtTyper'
@@ -22,6 +36,7 @@ export default {
   name: 'TypePage',
 
   components: {
+    'ft-timer': FtTimer,
     'ft-button': FtButton,
     'ft-progress': FtProgress,
     'ft-typer': FtTyper
@@ -32,16 +47,35 @@ export default {
       typerRef: null,
       eraseMargin: 1000,
 
-      eraseTimer: null,
-      goalTimer: null,
-      eraseProgress: 1,
-      goalProgress: 1,
+      isEraseTimerMounted: false,
+      isGoalTimerMounted: false,
+
       showEraseTimer: false,
       hasStarted: false
     }
   },
 
   computed: {
+    eraseTimer () {
+      return this.isEraseTimerMounted ? this.$refs.eraseTimer : false
+    },
+
+    goalTimer () {
+      return this.isGoalTimerMounted ? this.$refs.goalTimer : false
+    },
+
+    goalProgress () {
+      if (!this.goalTimer) return 0
+
+      return this.goalTimer.time / this.goalTime
+    },
+
+    eraseProgress () {
+      if (!this.eraseTimer) return 0
+
+      return (this.eraseTimer.time - this.eraseMargin) / (this.eraseTime - this.eraseMargin)
+    },
+
     opacity () {
       if (this.eraseProgress === 1) return 1
 
@@ -62,11 +96,6 @@ export default {
     ])
   },
 
-  created () {
-    this.eraseTimer = new Timer()
-    this.goalTimer = new Timer()
-  },
-
   methods: {
     focus () {
       if (!this.typerRef) return
@@ -77,57 +106,46 @@ export default {
     onTextChanged () {
       if (!this.hasStarted) {
         this.start()
+      } else {
+        this.eraseTimer.reset()
+        this.goalTimer.resume()
+        this.showEraseTimer = false
+        this.$store.commit('updatePreviousText')
       }
-
-      // We can reset the timer here
-      this.eraseTimer.reset()
-      this.showEraseTimer = false
-      this.$store.commit('updatePreviousText')
     },
 
     onTyperMounted (ref) {
       this.typerRef = ref
     },
 
-    start () {
-      this.hasStarted = true
-      this.eraseProgress = 0
-
-      if (this.hasStarted) {
-        window.requestAnimationFrame(this.update)
-      }
+    onEraseTimerMounted () {
+      this.isEraseTimerMounted = true
     },
 
-    update (timestamp) {
-      if (!this.eraseTimer.hasStarted) this.eraseTimer.start(timestamp)
-      if (!this.goalTimer.hasStarted) this.goalTimer.start(timestamp)
+    onGoalTimerMounted () {
+      this.isGoalTimerMounted = true
+    },
 
-      this.eraseTimer.update(timestamp)
-      this.goalTimer.update(timestamp)
+    onGoalReached () {
+      this.fileDownload()
+      this.stop()
+    },
 
-      if (this.eraseTimer.time >= this.eraseTime) {
-        this.eraseTimer.time = this.eraseTime
-        this.eraseProgress = 1
-        this.stop()
-      }
+    onEraseIntervalReached (intervalTime) {
+      this.goalTimer.pause()
+      this.showEraseTimer = true
+    },
 
-      if (this.eraseTimer.time >= this.eraseMargin) {
-        this.goalTimer.pause()
-        this.showEraseTimer = true
-        this.eraseProgress = (this.eraseTimer.time - this.eraseMargin) / (this.eraseTime - this.eraseMargin)
-      } else {
-        this.goalTimer.resume()
-        this.goalProgress = this.goalTimer.time / this.goalTime
-      }
+    onEraseReached () {
+      this.showEraseTimer = false
+      this.stop()
+    },
 
-      if (this.goalTimer.time >= this.goalTime) {
-        this.fileDownload()
-        this.stop()
-      }
+    start () {
+      this.hasStarted = true
 
-      if (this.hasStarted) {
-        window.requestAnimationFrame(this.update)
-      }
+      this.goalTimer.start()
+      this.eraseTimer.start()
     },
 
     fileDownload () {

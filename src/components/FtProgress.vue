@@ -10,8 +10,7 @@
 
     props: {
       progress: {
-        type: Number,
-        default: 0
+        type: Number
       },
 
       show: {

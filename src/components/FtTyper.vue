@@ -1,5 +1,5 @@
 <template>
-  <textarea ref="textarea" autofocus @keyup="onKeyUp" v-model="text" :style="{ opacity: opacity }"></textarea>
+  <textarea ref="textarea" autofocus @keyup="onKeyUp" v-model="text" :style="{ opacity }"></textarea>
 </template>
 
 <script>
