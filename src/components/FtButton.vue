@@ -1,6 +1,6 @@
 <template>
 	<div class="key-wrapper">
-		<span class="key" :class="[{ 'key-active': isActive}, type ]" @click="$emit('ft-click')">
+		<span class="key" :class="[{ 'key-active': isActive}, type ]" @click="$emit('click')">
 			<span><slot></slot></span>
 		</span>
 	</div>

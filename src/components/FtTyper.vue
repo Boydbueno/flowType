@@ -29,7 +29,7 @@
     },
 
     mounted () {
-      this.$emit('ft-typer-mounted', this.$refs.textarea)
+      this.$emit('mounted', this.$refs.textarea)
     },
 
     methods: {
@@ -43,7 +43,7 @@
           return
         }
 
-        this.$emit('ft-text-changed')
+        this.$emit('text-changed')
       }
     }
   }

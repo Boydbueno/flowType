@@ -3,8 +3,8 @@
     <ft-timer 
     ref="goalTimer" 
     :max="goalTime" 
-    @ft-timer-max-reached="onGoalReached" 
-    @on-mounted="onGoalTimerMounted" 
+    @max-reached="onGoalReached" 
+    @mounted="onGoalTimerMounted" 
     />
     <ft-progress class="goal-progress" :show="hasStarted" :progress="goalProgressBarWidth" />
 
@@ -12,15 +12,15 @@
     ref="eraseTimer" 
     :interval="[eraseMargin]" 
     :max="eraseTime + eraseMargin" 
-    @ft-timer-interval-reached="onEraseIntervalReached" 
-    @ft-timer-max-reached="onEraseReached"
-    @on-mounted="onEraseTimerMounted"
+    @interval-reached="onEraseIntervalReached" 
+    @max-reached="onEraseReached"
+    @mounted="onEraseTimerMounted"
     />
     <ft-progress class="erase-progress" :show="showEraseTimer" :progress="eraseProgressBarWidth" />
 
-    <ft-button @ft-click="$router.push('/')">esc</ft-button>
+    <ft-button @click="$router.push('/')">esc</ft-button>
 
-    <ft-typer @ft-text-changed="onTextChanged" @ft-typer-mounted="onTyperMounted" :opacity="opacity" />
+    <ft-typer @text-changed="onTextChanged" @mounted="onTyperMounted" :opacity="opacity" />
   </div>
 </template>
 

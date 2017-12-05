@@ -38,7 +38,7 @@
     },
 
     mounted () {
-      this.$emit('on-mounted')
+      this.$emit('mounted')
     },
 
     methods: {
@@ -63,13 +63,13 @@
 
         if (this.interval.length > this.intervalReached) {
           if (this.time >= this.interval[this.intervalReached]) {
-            this.$emit('ft-timer-interval-reached', this.interval[this.intervalReached])
+            this.$emit('interval-reached', this.interval[this.intervalReached])
             this.intervalReached++
           }
         }
 
         if (this.time >= this.max) {
-          this.$emit('ft-timer-max-reached')
+          this.$emit('max-reached')
         }
 
         window.requestAnimationFrame(this.update)

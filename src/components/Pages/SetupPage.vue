@@ -9,7 +9,7 @@
           <ft-button 
             v-for="(time, key) in availableTimes" 
             :is-active="goalTime === time.milliseconds" 
-            @ft-click="setGoalTime(time.milliseconds)"
+            @click="setGoalTime(time.milliseconds)"
             :key="key"
           >
             {{ time.label }}
@@ -20,7 +20,7 @@
       </section>
 
       <section>
-        <ft-button type="confirm" @ft-click="$router.push('writer')">Go</ft-button>
+        <ft-button type="confirm" @click="$router.push('writer')">Go</ft-button>
       </section>
 
     </div>
