@@ -73,7 +73,7 @@ export default {
     eraseProgress () {
       if (!this.eraseTimer) return 0
 
-      return (this.eraseTimer.time - this.eraseMargin) / (this.eraseTime - this.eraseMargin)
+      return (this.eraseTimer.time - this.eraseMargin) / this.eraseTime
     },
 
     opacity () {
