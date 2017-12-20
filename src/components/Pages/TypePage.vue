@@ -1,20 +1,20 @@
 <template>
   <div class="writer" @click="focus">
     <ft-timer 
-    ref="goalTimer" 
-    :max="goalTime" 
-    @max-reached="onGoalReached" 
-    @mounted="onGoalTimerMounted" 
+      ref="goalTimer" 
+      :max="goalTime" 
+      @max-reached="onGoalReached" 
+      @mounted="onGoalTimerMounted" 
     />
     <ft-progress class="goal-progress" :show="hasStarted" :progress="goalProgressBarWidth" />
 
     <ft-timer 
-    ref="eraseTimer" 
-    :interval="[eraseMargin]" 
-    :max="eraseTime + eraseMargin" 
-    @interval-reached="onEraseIntervalReached" 
-    @max-reached="onEraseReached"
-    @mounted="onEraseTimerMounted"
+      ref="eraseTimer" 
+      :interval="[eraseMargin]" 
+      :max="eraseTime + eraseMargin" 
+      @interval-reached="onEraseIntervalReached" 
+      @max-reached="onEraseReached"
+      @mounted="onEraseTimerMounted"
     />
     <ft-progress class="erase-progress" :show="showEraseTimer" :progress="eraseProgressBarWidth" />
 
@@ -56,36 +56,64 @@ export default {
   },
 
   computed: {
+    /**
+     * The erase timer or false when it's not mounted
+     * @return {FtTimer | boolean}
+     */
     eraseTimer () {
       return this.isEraseTimerMounted ? this.$refs.eraseTimer : false
     },
 
+    /**
+     * The goal timer or false when it's not mounted
+     * @return {FtTimer | boolean}
+     */
     goalTimer () {
       return this.isGoalTimerMounted ? this.$refs.goalTimer : false
     },
 
+    /**
+     * Progress to goal based on the goal timer
+     * @return {Number} Between 0 and 1
+     */
     goalProgress () {
       if (!this.goalTimer) return 0
 
       return this.goalTimer.time / this.goalTime
     },
 
+    /**
+     * Progress to erasion based on the goal timer
+     * @return {Number} Between 0 and 1
+     */
     eraseProgress () {
       if (!this.eraseTimer) return 0
 
       return (this.eraseTimer.time - this.eraseMargin) / this.eraseTime
     },
 
+    /**
+     * The opacity for the text
+     * @return {Number} Between 0 and 1
+     */
     opacity () {
       if (this.eraseProgress === 1) return 1
 
       return this.showEraseTimer ? 1 - this.eraseProgress : 1
     },
 
+    /**
+     * Width of the progress bar in percentage
+     * @return {Number} Width of progress bar in percentage
+     */
     goalProgressBarWidth () {
       return 100 * this.goalProgress
     },
 
+    /**
+     * Width of the erase bar in percentage
+     * @return {Number} Width of erase bar in percentage
+     */
     eraseProgressBarWidth () {
       return 100 - 100 * this.eraseProgress
     },
@@ -97,12 +125,18 @@ export default {
   },
 
   methods: {
+    /**
+     * Focus the text area to type in
+     */
     focus () {
       if (!this.typerRef) return
 
       this.typerRef.focus()
     },
 
+    /**
+     * When text is changed
+     */
     onTextChanged () {
       if (!this.hasStarted) {
         this.start()
@@ -114,33 +148,56 @@ export default {
       }
     },
 
+    /**
+     * When typer is mounted
+     * @param  {HTMLTextAreaElement} ref
+     */
     onTyperMounted (ref) {
       this.typerRef = ref
     },
 
+    /**
+     * When erase timer is mounted
+     */
     onEraseTimerMounted () {
       this.isEraseTimerMounted = true
     },
 
+    /**
+     * When goal timer is mounted
+     */
     onGoalTimerMounted () {
       this.isGoalTimerMounted = true
     },
 
+    /**
+     * When goal timer is mounted
+     */
     onGoalReached () {
       this.fileDownload()
       this.stop()
     },
 
+    /**
+     * When an erase timer interval is reached
+     * @param  {Number} intervalTime The interval time that is reached
+     */
     onEraseIntervalReached (intervalTime) {
       this.goalTimer.pause()
       this.showEraseTimer = true
     },
 
+    /**
+     * When erase timer has been reached
+     */
     onEraseReached () {
       this.showEraseTimer = false
       this.stop()
     },
 
+    /**
+     * Start the typing 'game'
+     */
     start () {
       this.hasStarted = true
 
@@ -148,6 +205,9 @@ export default {
       this.eraseTimer.start()
     },
 
+    /**
+     * Let browser download file with the text
+     */
     fileDownload () {
       var pom = document.createElement('a')
       pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.$store.state.text))
@@ -158,6 +218,9 @@ export default {
       pom.dispatchEvent(event)
     },
 
+    /**
+     * Stop the 'game'
+     */
     stop () {
       this.hasStarted = false
       this.eraseTimer.stop()

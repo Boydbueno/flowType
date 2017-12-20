@@ -32,6 +32,10 @@
     },
 
     computed: {
+      /**
+       * How long the timer has been running
+       * @return {Number} Time in ms
+       */
       time () {
         return Math.min(this.currentTime - this.startTime - this.pausedTime, this.max)
       }
@@ -42,12 +46,19 @@
     },
 
     methods: {
+      /**
+       * Start the timer
+       */
       start () {
         this.hasStarted = true
 
         window.requestAnimationFrame(this.update)
       },
 
+      /**
+       * Update of the timer repeated on animation frame
+       * @param  {Number} timestamp
+       */
       update (timestamp) {
         if (!this.hasStarted) return
 
@@ -75,6 +86,9 @@
         window.requestAnimationFrame(this.update)
       },
 
+      /**
+       * Stop the timer
+       */
       stop () {
         this.hasStarted = false
         this.isPaused = false
@@ -89,10 +103,16 @@
         this.intervalReached = 0
       },
 
+      /**
+       * Pause the timer
+       */
       pause () {
         this.isPaused = true
       },
 
+      /**
+       * Resume the timer after pausing
+       */
       resume () {
         if (!this.isPaused) return
 
@@ -101,6 +121,9 @@
         this.isPaused = false
       },
 
+      /**
+       * Reset the timer
+       */
       reset () {
         this.startTime = this.currentTime
       }
