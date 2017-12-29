@@ -8,6 +8,17 @@ export default new Vuex.Store({
     text: '',
     previousText: '',
 
+    texts: [
+      {
+        timestamp: 1,
+        content: 'This is a text that I typed, presumably'
+      },
+      {
+        timestamp: 2,
+        content: 'This is another text that I typed, presumably'
+      }
+    ],
+
     goalTime: 10000,
     eraseTime: 6000
   },
@@ -21,6 +32,9 @@ export default new Vuex.Store({
     },
     updatePreviousText (state) {
       state.previousText = state.text
+    },
+    removeTextByIndex (state, index) {
+      state.texts.splice(index, 1)
     }
   }
 })

@@ -3,6 +3,8 @@
     
     <div class="container">
 
+      <ft-button @click="$router.push('texts')">Texts</ft-button>
+
       <section class="goal-select cf">
         <h1>Pick Goal</h1>
         <div class="options cf">
