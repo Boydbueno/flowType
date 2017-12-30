@@ -3,7 +3,7 @@
     <i-row type="flex" justify="center">
       <i-col span="10">
         <section class="texts">
-          <i-table :columns="columns" :data="texts" no-data-text="There are no saved texts"></i-table>
+          <i-table :columns="columns" :data="nonTrashedTexts" no-data-text="There are no saved texts"></i-table>
         </section>
       </i-col>
     </i-row>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 import { Table, Row, Col, Button, Icon } from 'iview'
 
@@ -32,6 +32,10 @@ export default {
   computed: {
     ...mapState([
       'texts'
+    ]),
+    ...mapGetters([
+      'nonTrashedTexts',
+      'trashedTexts'
     ])
   },
 
@@ -60,7 +64,6 @@ export default {
                   click: () => {
                     let text = this.texts[params.index].content
                     this.fileDownload(text)
-                    console.log(params.index)
                   }
                 },
                 style: {
@@ -81,7 +84,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.$store.commit('removeTextByIndex', params.index)
+                    this.$store.commit('trashTextByIndex', params.index)
                   }
                 }
               }, [
