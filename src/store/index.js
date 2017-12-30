@@ -40,9 +40,15 @@ export default new Vuex.Store({
     updatePreviousText (state) {
       state.previousText = state.text
     },
-    trashTextByIndex (state, index) {
-      state.texts[index].trashed = true
+    saveText (state, text) {
+      state.texts.push(text)
+    },
+    trashText (state, textToFind) {
+      state.texts.find(text => text === textToFind).trashed = true
       // state.texts.splice(index, 1)
+    },
+    untrashText (state, textToFind) {
+      state.texts.find(text => text === textToFind).trashed = false
     }
   }
 })

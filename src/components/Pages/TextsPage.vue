@@ -16,6 +16,8 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 
+import TextsActions from '@/components/TextsActions'
+
 import { Table, Row, Col, Button, Icon } from 'iview'
 
 export default {
@@ -54,48 +56,11 @@ export default {
           title: ' ',
           width: 100,
           render: (h, params) => {
-            return h('div', [
-              h(Button, {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                on: {
-                  click: () => {
-                    let text = this.texts[params.index].content
-                    this.fileDownload(text)
-                  }
-                },
-                style: {
-                  marginRight: '5px'
-                }
-              }, [
-                h(Icon, {
-                  props: {
-                    type: 'ios-download-outline',
-                    size: 20
-                  }
-                })
-              ]),
-              h(Button, {
-                props: {
-                  type: 'error',
-                  size: 'small'
-                },
-                on: {
-                  click: () => {
-                    this.$store.commit('trashTextByIndex', params.index)
-                  }
-                }
-              }, [
-                h(Icon, {
-                  props: {
-                    type: 'trash-a',
-                    size: 20
-                  }
-                })
-              ])
-            ])
+            return h(TextsActions, {
+              props: {
+                text: this.texts[params.index]
+              }
+            })
           }
         }
       ]

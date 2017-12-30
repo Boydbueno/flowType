@@ -174,7 +174,7 @@ export default {
      * When goal timer is mounted
      */
     onGoalReached () {
-      this.fileDownload()
+      this.saveText()
       this.stop()
     },
 
@@ -203,6 +203,14 @@ export default {
 
       this.goalTimer.start()
       this.eraseTimer.start()
+    },
+
+    saveText () {
+      this.$store.commit('saveText', {
+        timestamp: Date.now(),
+        content: this.$store.state.text,
+        trashed: false
+      })
     },
 
     /**
