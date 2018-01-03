@@ -43,6 +43,9 @@ export default new Vuex.Store({
     saveText (state, text) {
       state.texts.push(text)
     },
+    setTexts (state, texts) {
+      state.texts = texts
+    },
     trashText (state, textToFind) {
       state.texts.find(text => text === textToFind).trashed = true
       // state.texts.splice(index, 1)
