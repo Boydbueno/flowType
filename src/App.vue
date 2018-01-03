@@ -5,9 +5,33 @@
 </template>
 
 <script>
-  export default {
-    name: 'app'
+import { mapState } from 'vuex'
+
+export default {
+  name: 'app',
+
+  computed: {
+    ...mapState([
+      'texts'
+    ])
+  },
+
+  watch: {
+    texts: {
+      handler (newTexts) {
+        localStorage.setItem('texts', JSON.stringify(this.texts))
+      },
+      deep: true
+    }
+  },
+
+  beforeCreate () {
+    let texts = localStorage.getItem('texts')
+    if (!texts) return
+
+    this.$store.commit('setTexts', JSON.parse(texts))
   }
+}
 </script>
 
 <style>
