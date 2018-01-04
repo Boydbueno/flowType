@@ -7,6 +7,17 @@
         </section>
       </i-col>
     </i-row>
+
+    <i-row type="flex" justify="center">
+      <h1>Trash</h1>
+    </i-row>
+    <i-row type="flex" justify="center">
+      <i-col span="10">
+        <section class="texts">
+          <i-table :columns="trashColumns" :data="trashedTexts" no-data-text="There are no texts in your trash"></i-table>
+        </section>
+      </i-col>
+    </i-row>
     <i-row type="flex" justify="center">
       <i-button @click="$router.push('/')">Back</i-button>
     </i-row>
@@ -17,6 +28,7 @@
 import { mapState, mapGetters } from 'vuex'
 
 import TextsActions from '@/components/TextsActions'
+import TrashTextsActions from '@/components/TrashTextsActions'
 
 import { Table, Row, Col, Button, Icon } from 'iview'
 
@@ -57,6 +69,27 @@ export default {
           width: 100,
           render: (h, params) => {
             return h(TextsActions, {
+              props: {
+                text: this.texts[params.index]
+              }
+            })
+          }
+        }
+      ],
+      trashColumns: [
+        {
+          type: 'selection',
+          width: 52
+        },
+        {
+          title: 'Title',
+          key: 'content'
+        },
+        {
+          title: ' ',
+          width: 68,
+          render: (h, params) => {
+            return h(TrashTextsActions, {
               props: {
                 text: this.texts[params.index]
               }
