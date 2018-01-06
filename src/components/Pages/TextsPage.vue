@@ -91,7 +91,7 @@ export default {
           render: (h, params) => {
             return h(TrashTextsActions, {
               props: {
-                text: this.texts[params.index]
+                text: params.row
               }
             })
           }

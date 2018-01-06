@@ -34,11 +34,11 @@ export default new Vuex.Store({
       state.texts = texts
     },
     trashText (state, textToFind) {
-      state.texts.find(text => text === textToFind).trashed = true
+      state.texts.find(text => text.content === textToFind.content).trashed = true
       // state.texts.splice(index, 1)
     },
     restoreText (state, textToFind) {
-      state.texts.find(text => text === textToFind).trashed = false
+      state.texts.find(text => text.content === textToFind.content).trashed = false
     }
   }
 })

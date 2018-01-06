@@ -45,7 +45,7 @@ export default {
               on: {
                 click: () => {
                   msg()
-                  this.$store.commit('untrashText', this.text)
+                  this.$store.commit('restoreText', this.text)
                 }
               }
             }, 'undo')
