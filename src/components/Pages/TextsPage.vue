@@ -87,7 +87,7 @@ export default {
         },
         {
           title: ' ',
-          width: 68,
+          width: 110,
           render: (h, params) => {
             return h(TrashTextsActions, {
               props: {
