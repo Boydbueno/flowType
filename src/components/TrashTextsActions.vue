@@ -16,7 +16,7 @@
           <span>Delete confirmation</span>
         </p>
         <div slot="footer">
-          <i-button type="error" size="large" long :loading="modal_loading" @click="onDelete">Delete</i-button>
+          <i-button type="error" size="large" long @click="onDelete">Delete</i-button>
         </div>
         <p>Are you sure you want to permanently delete '{{ text.content }}'</p>
     </i-modal>

@@ -1,7 +1,7 @@
 <template>
 	<section class="setup">
 
-    <i-row type="flex" justify="center" gutter="30">
+    <i-row type="flex" justify="center" :gutter="30">
       <i-col span="18">
         <i-card>
 
@@ -99,9 +99,14 @@ export default {
     }
   },
 
+  mounted () {
+    this.showMenu()
+  },
+
   methods: {
     ...mapMutations([
-      'setGoalTime'
+      'setGoalTime',
+      'showMenu'
     ]),
     route (name) {
       this.$router.push(name)

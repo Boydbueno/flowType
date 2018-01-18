@@ -18,7 +18,7 @@
     />
     <ft-progress class="erase-progress" :show="showEraseTimer" :progress="eraseProgressBarWidth" />
 
-    <ft-button @click="$router.push('/')">esc</ft-button>
+    <i-button @click="$router.push('/')">exit</i-button>
 
     <ft-typer @text-changed="onTextChanged" @mounted="onTyperMounted" :opacity="opacity" />
   </div>
@@ -30,16 +30,24 @@ import FtButton from '@/components/FtButton'
 import FtProgress from '@/components/FtProgress'
 import FtTyper from '@/components/FtTyper'
 
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
+
+import { Button } from 'iview'
 
 export default {
   name: 'TypePage',
 
   components: {
+    'i-button': Button,
     'ft-timer': FtTimer,
     'ft-button': FtButton,
     'ft-progress': FtProgress,
     'ft-typer': FtTyper
+  },
+
+  mounted () {
+    this.typerRef.focus()
+    this.hideMenu()
   },
 
   data () {
@@ -235,14 +243,17 @@ export default {
       this.goalTimer.stop()
       this.$store.commit('updateText', '')
       this.$store.commit('updatePreviousText')
-    }
+    },
+
+    ...mapMutations([
+      'hideMenu'
+    ])
   }
 }
 </script>
 
 <style lang="scss" scoped>
   .writer {
-    background-color: #cecec4;
     cursor: text;
   }
 

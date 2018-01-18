@@ -9,7 +9,8 @@ export default new Vuex.Store({
     previousText: '',
     texts: [],
     goalTime: 10000,
-    eraseTime: 6000
+    eraseTime: 6000,
+    showMenu: true
   },
 
   getters: {
@@ -43,6 +44,12 @@ export default new Vuex.Store({
       let textToRemove = state.texts.find(text => text.content === textToFind.content)
       let index = state.texts.indexOf(textToRemove)
       state.texts.splice(index, 1)
+    },
+    hideMenu (state) {
+      state.showMenu = false
+    },
+    showMenu (state) {
+      state.showMenu = true
     }
   }
 })

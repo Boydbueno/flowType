@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <i-menu mode="horizontal" @on-select="route" active-name="/">
+
+    <i-menu v-if="showMenu" class="menu" mode="horizontal" @on-select="route" active-name="/">
       <i-menu-item name="/">
         Setup
       </i-menu-item>
@@ -8,7 +9,6 @@
         Texts
       </i-menu-item>
     </i-menu>
-
 
     <router-view></router-view>
   </div>
@@ -29,7 +29,8 @@ export default {
 
   computed: {
     ...mapState([
-      'texts'
+      'texts',
+      'showMenu'
     ])
   },
 
@@ -62,5 +63,9 @@ html,
 body,
 #app {
   height: 100%;
+}
+
+.menu {
+  margin-bottom: 10px;
 }
 </style>
