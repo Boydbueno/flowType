@@ -1,31 +1,64 @@
 <template>
 	<section class="setup">
-    
-    <div class="container">
 
-      <ft-button @click="$router.push('texts')">Texts</ft-button>
+    <i-row type="flex" justify="center" gutter="30">
+      <i-col span="18">
+        <i-card>
 
-      <section class="goal-select cf">
-        <h1>Pick Goal</h1>
-        <div class="options cf">
-          <ft-button 
-            v-for="(time, key) in availableTimes" 
-            :is-active="goalTime === time.milliseconds" 
-            @click="setGoalTime(time.milliseconds)"
-            :key="key"
-          >
-            {{ time.label }}
-          </ft-button>
+          <h1 slot="title">Setup</h1>
 
-          <div class="cf"></div>
-        </div>
-      </section>
+          <i-row>
+            <i-col span="12" type="flex" justify="center">
+              <i-row>
+                <section class="setting">
+                  <i-card>
+                    <p slot="title">Time to type</p>
 
-      <section>
-        <ft-button type="confirm" @click="$router.push('writer')">Go</ft-button>
-      </section>
+                    <i-radio-group v-model="time" type="button">
+                      <i-radio v-for="(time, key) in availableTimes" :label="time.label" :key="key">
+                      </i-radio>
+                    </i-radio-group>
+                  </i-card>
+                </section>
+              </i-row>
 
-    </div>
+              <i-row>
+                <section class="setting">
+                  <i-card>
+                    <p slot="title">Theme</p>
+                  </i-card>
+                </section>
+              </i-row>
+            </i-col>
+
+            <i-col span="12">
+              <i-row>
+                <section class="setting">
+                  <i-card>
+                    <p slot="title">Font</p>
+                  </i-card>
+                </section>
+              </i-row>
+              
+              <i-row>
+                <section>
+                  <i-card class="setting">
+                    <p slot="title">Countdown style</p>
+                  </i-card>
+                </section>
+              </i-row>
+            </i-col>
+          </i-row>
+
+          <i-row>
+            <section>
+              <i-button long type="primary" @click="$router.push('writer')">Go</i-button>
+            </section>
+          </i-row>
+
+        </i-card>
+      </i-col>
+    </i-row>
 
 	</section>
 </template>
@@ -33,58 +66,52 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 
-import FtButton from '@/components/FtButton'
 import settings from '@/settings'
+
+import { Button, Radio, RadioGroup, Menu, MenuItem, Row, Col, Card } from 'iview'
 
 export default {
   name: 'SetupPage',
 
   components: {
-    'ft-button': FtButton
+    'i-row': Row,
+    'i-col': Col,
+    'i-card': Card,
+    'i-menu': Menu,
+    'i-menu-item': MenuItem,
+    'i-button': Button,
+    'i-radio-group': RadioGroup,
+    'i-radio': Radio
   },
 
   computed: {
     availableTimes: () => settings.availableTimes,
     ...mapState([
       'goalTime'
-    ])
+    ]),
+    time: {
+      get () {
+        return this.$store.state.goalTime + ' min'
+      },
+      set (value) {
+        this.setGoalTime(value)
+      }
+    }
   },
 
   methods: {
     ...mapMutations([
       'setGoalTime'
-    ])
+    ]),
+    route (name) {
+      this.$router.push(name)
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .setup {
-    height: 100%;
-    margin: 0 auto;
-    background-color: #cecec4;
-  }
-
-  .container {
-    width: 1000px;
-    margin: 0 auto;
-  }
-
-  .goal-select { 
-    padding-top: 50px;
-  }
-
-  .cf {
-    clear: both;
-  }
-
-  h1 {
-    margin-top: 0;
-    margin-left: 15px;
-  }
-
-  .continue {
-    margin-top: 15px;
-    margin-left: 15px;
+  .setting {
+    margin-bottom: 20px;
   }
 </style>
