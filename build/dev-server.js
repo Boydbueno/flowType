@@ -12,6 +12,7 @@ const path = require('path')
 const express = require('express')
 const webpack = require('webpack')
 const proxyMiddleware = require('http-proxy-middleware')
+const launchMiddleware = require('launch-editor-middleware')
 const webpackConfig = require('./webpack.dev.conf')
 
 // default port where dev server listens for incoming traffic
@@ -40,6 +41,9 @@ compiler.plugin('compilation', function (compilation) {
     cb()
   })
 })
+
+// enable opening file in editor from vue devtools
+app.use('/__open-in-editor', launchMiddleware())
 
 // enable hot-reload and state-preserving
 // compilation error display
