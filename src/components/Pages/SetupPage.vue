@@ -15,7 +15,8 @@
                     <p slot="title">Time to type</p>
 
                     <i-radio-group v-model="time" type="button">
-                      <i-radio v-for="(time, key) in availableTimes" :label="time.label" :key="key">
+                      <i-radio v-for="(time, key) in availableTimes" :label="time.milliseconds" :key="key">
+                        {{ time.label }}
                       </i-radio>
                     </i-radio-group>
                   </i-card>
@@ -91,7 +92,7 @@ export default {
     ]),
     time: {
       get () {
-        return this.$store.state.goalTime + ' min'
+        return this.$store.state.goalTime
       },
       set (value) {
         this.setGoalTime(value)
