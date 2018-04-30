@@ -1,32 +1,14 @@
 <template>
   <div>
-    <i-button size="small" type="primary" @click="onDownload">
-      <i-icon size="20" type="ios-download-outline"></i-icon>
-    </i-button>
-
-    <i-button size="small" type="error" @click="onRemove">
-      <i-icon size="20" type="trash-a"></i-icon>
-    </i-button>
+    <span @click="onDownload">DOWNLOAD</span>
+    <span @click="onRemove">TRASH</span>
   </div>
 </template>
 
 <script>
-import { Button, Icon, Message } from 'iview'
 
 export default {
   name: 'TextsActions',
-
-  props: {
-    text: {
-      type: Object,
-      required: true
-    }
-  },
-
-  components: {
-    'i-button': Button,
-    'i-icon': Icon
-  },
 
   methods: {
     onDownload () {
@@ -35,24 +17,6 @@ export default {
 
     onRemove () {
       this.$store.commit('trashText', this.text)
-      let msg = Message.info({
-        render: h => {
-          return h('span', [
-            'The text ',
-            h('small', this.text.content),
-            ' has been archived. ',
-            h('a', {
-              on: {
-                click: () => {
-                  msg()
-                  this.$store.commit('restoreText', this.text)
-                }
-              }
-            }, 'undo')
-          ])
-        },
-        duration: 10
-      })
     },
 
     /**

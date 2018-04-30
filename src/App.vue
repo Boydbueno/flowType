@@ -1,14 +1,10 @@
 <template>
   <div id="app">
 
-    <i-menu v-if="showMenu" class="menu" mode="horizontal" @on-select="route" active-name="/">
-      <i-menu-item name="/">
-        Setup
-      </i-menu-item>
-      <i-menu-item name="texts">
-        Texts
-      </i-menu-item>
-    </i-menu>
+    <nav>
+      <router-link :to="{ name: 'SetupPage'}">Setup</router-link>
+      <router-link :to="{ name: 'TextsPage'}">Texts</router-link>
+    </nav>
 
     <router-view></router-view>
   </div>
@@ -17,14 +13,10 @@
 <script>
 import { mapState } from 'vuex'
 
-import { Menu, MenuItem } from 'iview'
-
 export default {
   name: 'app',
 
   components: {
-    'i-menu': Menu,
-    'i-menu-item': MenuItem
   },
 
   computed: {
@@ -59,13 +51,5 @@ export default {
 </script>
 
 <style>
-html, 
-body,
-#app {
-  height: 100%;
-}
 
-.menu {
-  margin-bottom: 10px;
-}
 </style>

@@ -1,31 +1,19 @@
 <template>
-  <section class="texts">
-    
-    <i-row type="flex" justify="center">
-      <i-col span="18">
-        <i-card>
+  <section class="trashPage">
+    <section class="texts">
+      <h1>Stored Texts</h1>
+      <ol>
+        <li v-for="text in nonTrashedTexts">{{ text.content }}</li>
+      </ol>
+    </section>
 
-          <h1 slot="title">Stored Texts</h1>
-          <i-row>
-            <i-card>
-              <section class="texts">
-                <i-table :columns="columns" :data="nonTrashedTexts" no-data-text="There are no saved texts"></i-table>
-              </section>
-            </i-card>
-          </i-row>
-
-          <i-row>
-            <h1>Trash</h1>
-            <i-card>
-              <section class="texts">
-                <i-table :columns="trashColumns" :data="trashedTexts" no-data-text="There are no texts in your trash"></i-table>
-              </section>
-            </i-card>
-          </i-row>
-
-        </i-card>
-      </i-col>
-    </i-row>
+    <section class="trash">
+      <h1>Trash</h1>
+      <ol>
+        <li v-for="text in trashedTexts">{{ text.content }}</li>
+      </ol>
+    </section>
+  </section>
 
     
 
@@ -38,18 +26,10 @@ import { mapState, mapGetters, mapMutations } from 'vuex'
 import TextsActions from '@/components/TextsActions'
 import TrashTextsActions from '@/components/TrashTextsActions'
 
-import { Table, Row, Col, Button, Icon, Card } from 'iview'
-
 export default {
   name: 'TextsPage',
 
   components: {
-    'i-button': Button,
-    'i-table': Table,
-    'i-icon': Icon,
-    'i-card': Card,
-    'i-row': Row,
-    'i-col': Col
   },
 
   computed: {

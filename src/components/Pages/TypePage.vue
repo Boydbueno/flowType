@@ -18,7 +18,7 @@
     />
     <ft-progress class="erase-progress" :show="showEraseTimer" :progress="eraseProgressBarWidth" />
 
-    <i-button @click="$router.push('/')">exit</i-button>
+    <router-link :to="{ name: 'SetupPage'}">Exit</router-link>
 
     <ft-typer @text-changed="onTextChanged" @mounted="onTyperMounted" :opacity="opacity" />
   </div>
@@ -32,13 +32,10 @@ import FtTyper from '@/components/FtTyper'
 
 import { mapState, mapMutations } from 'vuex'
 
-import { Button } from 'iview'
-
 export default {
   name: 'TypePage',
 
   components: {
-    'i-button': Button,
     'ft-timer': FtTimer,
     'ft-button': FtButton,
     'ft-progress': FtProgress,
