@@ -2,7 +2,7 @@
   <div>
     <v-container grid-list-md>
       <v-layout row wrap>
-        <v-flex xs12 sm6 md4 v-for="(text, index) in nonTrashedTexts" :key=index>
+        <v-flex xs12 sm6 md4 v-for="(text, index) in archivedTexts" :key=index>
           <v-card>
             <v-card-text style="white-space: pre-line;">
               {{ text.content }}
@@ -10,16 +10,16 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-tooltip bottom>
-                <v-btn slot="activator" icon @click="onDownload(text)">
-                  <v-icon>cloud_download</v-icon>
+                <v-btn slot="activator" icon @click="onUnarchive(text)">
+                  <v-icon>unarchive</v-icon>
                 </v-btn>
-                <span>Download</span>
+                <span>Restore from archive</span>
               </v-tooltip>
               <v-tooltip bottom>
                 <v-btn slot="activator" icon @click="onRemove(text)">
-                  <v-icon>archive</v-icon>
+                  <v-icon>delete</v-icon>
                 </v-btn>
-                <span>Archive</span>
+                <span>Delete</span>
               </v-tooltip>
             </v-card-actions>
           </v-card>
@@ -38,7 +38,6 @@
         snackbarAction.action() 
       }">
         {{ snackbarAction.label }}
-      </v-btn>
       </v-btn>
     </v-snackbar>
   </div>

@@ -16,9 +16,7 @@
       @max-reached="onEraseReached"
       @mounted="onEraseTimerMounted"
     />
-    <ft-progress class="erase-progress" :show="showEraseTimer" :progress="eraseProgressBarWidth" />
-
-    <router-link :to="{ name: 'SetupPage'}">Exit</router-link>
+    <ft-progress class="erase-progress" :show="showEraseTimer" :progress="eraseProgressBarWidth" color="red" />
 
     <ft-typer @text-changed="onTextChanged" @mounted="onTyperMounted" :opacity="opacity" />
   </div>
@@ -45,6 +43,7 @@ export default {
   mounted () {
     this.typerRef.focus()
     this.hideMenu()
+    this.setBackButton('SetupPage')
   },
 
   data () {
@@ -243,7 +242,8 @@ export default {
     },
 
     ...mapMutations([
-      'hideMenu'
+      'hideMenu',
+      'setBackButton'
     ])
   }
 }
@@ -252,14 +252,6 @@ export default {
 <style lang="scss" scoped>
   .writer {
     cursor: text;
-  }
-
-  .goal-progress {
-    background-color: green;
-  }
-
-  .erase-progress {
-    background-color: red;
   }
 
   .fade-enter-active {

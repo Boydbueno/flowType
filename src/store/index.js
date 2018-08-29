@@ -8,13 +8,20 @@ export default new Vuex.Store({
     text: '',
     previousText: '',
     texts: [],
-    goalTime: 10000,
+    goalTime: 10 * 60000,
     eraseTime: 6000,
-    showMenu: true
+    showMenu: true,
+    toolbar: {
+      title: '',
+      action: {
+        type: 'menu',
+        location: null
+      }
+    }
   },
 
   getters: {
-    trashedTexts: state => state.texts.filter(text => text.trashed),
+    archivedTexts: state => state.texts.filter(text => text.trashed),
     nonTrashedTexts: state => state.texts.filter(text => !text.trashed)
   },
 
@@ -45,11 +52,26 @@ export default new Vuex.Store({
       let index = state.texts.indexOf(textToRemove)
       state.texts.splice(index, 1)
     },
+    setMenuState (state, payload) {
+      state.showMenu = payload
+    },
     hideMenu (state) {
       state.showMenu = false
     },
     showMenu (state) {
       state.showMenu = true
+    },
+    setBackButton (state, to) {
+      state.toolbar.action = {
+        type: 'back',
+        location: to
+      }
+    },
+    setMenuButton (state) {
+      state.toolbar.action = {
+        type: 'menu',
+        location: null
+      }
     }
   }
 })
