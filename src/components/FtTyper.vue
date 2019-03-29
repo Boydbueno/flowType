@@ -1,52 +1,59 @@
 <template>
-  <textarea ref="textarea" autofocus @keyup="onKeyUp" v-model="text" :style="{ opacity }"></textarea>
+  <textarea
+    ref="textarea"
+    v-model="text"
+    autofocus
+    :style="{opacity}"
+    @keyup="onKeyUp"
+  />
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+import { mapState } from 'vuex'
 
-  export default {
-    name: 'FtTyper',
+export default {
+  name: 'FtTyper',
 
-    props: {
-      opacity: {
-        type: Number
-      }
-    },
+  props: {
+    opacity: {
+      type: Number,
+      default: 0
+    }
+  },
 
-    computed: {
-      ...mapState([
-        'previousText'
-      ]),
-      text: {
-        get () {
-          return this.$store.state.text
-        },
-        set (value) {
-          this.$store.commit('updateText', value)
-        }
-      }
-    },
-
-    mounted () {
-      this.$emit('mounted', this.$refs.textarea)
-    },
-
-    methods: {
-      onKeyUp () {
-        // When there was no new input given
-        if (this.previousText === this.text) {
-          return
-        }
-
-        if (this.text === '') {
-          return
-        }
-
-        this.$emit('text-changed')
+  computed: {
+    ...mapState([
+      'previousText'
+    ]),
+    text: {
+      get () {
+        return this.$store.state.text
+      },
+      set (value) {
+        this.$store.commit('updateText', value)
       }
     }
+  },
+
+  mounted () {
+    this.$emit('mounted', this.$refs.textarea)
+  },
+
+  methods: {
+    onKeyUp () {
+      // When there was no new input given
+      if (this.previousText === this.text) {
+        return
+      }
+
+      if (this.text === '') {
+        return
+      }
+
+      this.$emit('text-changed')
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -57,8 +64,7 @@
     height: 100vh;
     border: 0;
     margin: 0 auto;
-    padding-top: 70px;
-    padding: 15px;
+    padding: 70px 15px 15px;
     font-size: 45px;
     background-color: transparent;
     resize: none;

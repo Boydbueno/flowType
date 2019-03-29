@@ -1,16 +1,16 @@
 <template>
-  <v-progress-linear
-    height="3"
+  <VProgressLinear
     v-show="show"
+    height="3"
     class="progress"
     :color="color"
     :value="progress"
     background-color="transparent"
-  ></v-progress-linear>
+  />
 </template>
 
 <script>
-import { VProgressLinear } from 'vuetify'
+import { VProgressLinear } from 'vuetify/lib'
 
 export default {
   name: 'FtProgress',
@@ -21,7 +21,8 @@ export default {
 
   props: {
     progress: {
-      type: Number
+      type: Number,
+      default: 0
     },
 
     color: {
@@ -30,8 +31,7 @@ export default {
     },
 
     show: {
-      type: Boolean,
-      default: false
+      type: Boolean
     }
   }
 }

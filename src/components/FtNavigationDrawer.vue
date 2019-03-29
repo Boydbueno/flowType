@@ -1,32 +1,46 @@
 <template>
-  <v-navigation-drawer clipped app fixed v-model="open">
+  <VNavigationDrawer
+    v-model="open"
+    clipped
+    app
+    fixed
+  >
     <v-list>
-      <v-list-tile ripple :to="{ name: 'SetupPage' }">
+      <v-list-tile
+        ripple
+        :to="{name: 'SetupPage'}"
+      >
         <v-list-tile-content>
           <v-list-tile-title>Typing</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
 
-       <v-list-tile ripple :to="{ name: 'TextsPage' }">
+      <v-list-tile
+        ripple
+        :to="{name: 'TextsPage'}"
+      >
         <v-list-tile-content>
           <v-list-tile-title>Texts</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
 
-      <v-divider></v-divider>
+      <v-divider />
 
-      <v-list-tile ripple :to="{ name: 'ArchivePage' }">
+      <v-list-tile
+        ripple
+        :to="{name: 'ArchivePage'}"
+      >
         <v-list-tile-content>
           <v-list-tile-title>Archive</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
-  </v-navigation-drawer>
+  </VNavigationDrawer>
 </template>
 
 <script>
-import {VNavigationDrawer} from 'vuetify'
-import * as VList from 'vuetify/es5/components/VList'
+import { VNavigationDrawer } from 'vuetify/lib'
+import * as VList from 'vuetify/lib/components/VList'
 
 export default {
   name: 'FtNavigationDrawer',

@@ -1,22 +1,39 @@
 <template>
   <v-app id="app">
+    <FtNavigationDrawer :open="showMenu" />
 
-    <ft-navigation-drawer :open="showMenu"></ft-navigation-drawer>
-
-    <v-toolbar app fixed clipped-left color="primary">
-      <v-toolbar-side-icon v-show="toolbar.action.type === 'menu'" @click.stop="showMenu = !showMenu"></v-toolbar-side-icon>
-      <router-link :to="{ name: toolbar.action.location}">
-        <v-btn icon dark v-show="toolbar.action.type === 'back'">
-          <v-icon color="grey lighten-2">arrow_back</v-icon>
+    <v-toolbar
+      app
+      fixed
+      clipped-left
+      color="primary"
+    >
+      <v-toolbar-side-icon
+        v-show="toolbar.action.type === 'menu'"
+        @click.stop="showMenu = !showMenu"
+      />
+      <router-link :to="{name: toolbar.action.location}">
+        <v-btn
+          v-show="toolbar.action.type === 'back'"
+          icon
+          dark
+        >
+          <VIcon color="grey lighten-2">
+            arrow_back
+          </VIcon>
         </v-btn>
       </router-link>
     </v-toolbar>
 
     <v-content>
-      <v-container fluid fill-height class="container">
+      <v-container
+        fluid
+        fill-height
+        class="container"
+      >
         <v-layout>
           <v-flex xs12>
-            <router-view></router-view>
+            <router-view />
           </v-flex>
         </v-layout>
       </v-container>
@@ -27,25 +44,23 @@
 <script>
 
 import { mapState } from 'vuex'
-import * as VList from 'vuetify/es5/components/VList'
-import * as VToolbar from 'vuetify/es5/components/VToolbar'
-import * as VCard from 'vuetify/es5/components/VCard'
-import FtNavigationDrawer from '@/components/FtNavigationDrawer'
+import * as VList from 'vuetify/lib/components/VList'
+import * as VToolbar from 'vuetify/lib/components/VToolbar'
+import * as VCard from 'vuetify/lib/components/VCard'
+import FtNavigationDrawer from './components/FtNavigationDrawer'
 import {
-  VIcon,
-  VSlider
-} from 'vuetify'
+  VIcon
+} from 'vuetify/lib'
 
 export default {
-  name: 'app',
+  name: 'App',
 
   components: {
     ...VList,
     ...VToolbar,
     ...VCard,
     FtNavigationDrawer,
-    VIcon,
-    VSlider
+    VIcon
   },
 
   computed: {
@@ -64,12 +79,6 @@ export default {
     }
   },
 
-  methods: {
-    route (name) {
-      this.$router.push(name)
-    }
-  },
-
   watch: {
     texts: {
       handler (newTexts) {
@@ -84,13 +93,18 @@ export default {
     if (!texts) return
 
     this.$store.commit('setTexts', JSON.parse(texts))
+  },
+
+  methods: {
+    route (name) {
+      this.$router.push(name)
+    }
   }
 }
 </script>
 
 <style>
-.container {
-  position: relative;
-}
-
+    .container {
+        position: relative;
+    }
 </style>
