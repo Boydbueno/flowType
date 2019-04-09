@@ -1,8 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import SetupPage from './views/Setup'
-import TextsPage from './views/Texts'
-import ArchivePage from './views/Archive'
 
 Vue.use(Router)
 
@@ -13,22 +10,22 @@ export default new Router({
     {
       path: '/setup',
       name: 'SetupPage',
-      component: SetupPage
+      component: () => import(/* webpackChunkName: "setup" */ './views/Setup')
     },
     {
       path: '/texts',
       name: 'TextsPage',
-      component: TextsPage
+      component: () => import(/* webpackChunkName: "texts" */ './views/Texts')
     },
     {
       path: '/archive',
       name: 'ArchivePage',
-      component: ArchivePage
+      component: () => import(/* webpackChunkName: "archive" */ './views/Archive')
     },
     {
       path: '/writer',
       name: 'TypePage',
-      component: () => import(/* webpackChunkName: "type" */ './views/Type')
+      component: () => import(/* webpackChunkName: "writer" */ './views/Type')
     }
   ]
 })
