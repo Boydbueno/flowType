@@ -39,6 +39,10 @@ export default {
     this.$emit('mounted', this.$refs.textarea)
   },
 
+  destroyed () {
+    this.text = ''
+  },
+
   methods: {
     onKeyUp () {
       // When there was no new input given
